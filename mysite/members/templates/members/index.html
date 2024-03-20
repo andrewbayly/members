@@ -1,0 +1,36 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'members/style.css' %}">
+
+<br>
+
+<b>Team members</b> <br>
+
+<span class="subheading">You have {{ team_member_list|length }} team members.</span>
+<br><br>
+
+<hr><br>
+<ul>
+    {% for team_member in team_member_list %}
+        <li>
+            
+            <div>
+            <table>
+              <tr>
+                <td>
+                <img src="{% static 'members/head.png' %}" alt="My image">
+                </td>
+                <td>
+                <div>
+                <span class="titletext"><a href="/{{ team_member.id }}/">{{ team_member.FirstName  }} {{  team_member.LastName }} {{ team_member.getAdmin }}</a></span><br>
+                <span class="bodytext">{{ team_member.Phone  }}</span><br>
+                <span class="bodytext">{{ team_member.Email  }}</span><br>
+                </div>
+                </td>
+              </tr>
+            </table>  
+            </div>
+            <br><hr><br>
+        </li>
+    {% endfor %}
+</ul>

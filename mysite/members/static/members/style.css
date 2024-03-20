@@ -1,0 +1,39 @@
+body { 
+  font-family : arial;
+}
+
+li a {
+    color: black;
+    text-decoration: none; 
+}
+
+td {
+  padding: 2px;
+  vertical-align: top;
+}
+
+ul {
+    list-style-type: none; 
+    padding: 0;
+    margin: 0; 
+}
+
+span.bodytext { 
+    font-size: 12px;
+    line-height: 14pt;
+    color: #BBBBBB;
+}
+
+span.titletext { 
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 14pt;
+    color: grey;
+    
+}
+
+span.subheading { 
+    font-size: 12px;
+    font-weight: bold;
+    color: #BBBBBB;
+}
