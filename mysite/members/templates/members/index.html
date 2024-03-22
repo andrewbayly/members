@@ -2,6 +2,8 @@
 
 <link rel="stylesheet" href="{% static 'members/style.css' %}">
 
+<button id="addButton" >Add</button>
+
 <br>
 
 <b>Team members</b> <br>
@@ -34,3 +36,15 @@
         </li>
     {% endfor %}
 </ul>
+
+<script type="text/javascript">
+
+    function onAdd() {
+
+        location.href = '/add'
+
+    };
+    
+    document.getElementById("addButton").onclick = onAdd
+
+</script>

@@ -1,0 +1,93 @@
+{% load static %}
+
+
+<script>
+
+    async function onAdd() {
+        
+        const data = {
+          FirstName : document.getElementById("FirstName").value, 
+          LastName : document.getElementById("LastName").value, 
+          Email : document.getElementById("Email").value, 
+          Phone : document.getElementById("Phone").value, 
+        }
+        
+        await fetch("/", {method: 'PUT', body: JSON.stringify(data)})
+        
+        location.href = '/'
+    };
+    
+    async function onSave() {
+        
+        const data = {
+    {% if team_member == None %}
+          id : null, 
+    {% else %}    
+          id : {{team_member.id}},  
+    {% endif %}    
+          FirstName : document.getElementById("FirstName").value, 
+          LastName : document.getElementById("LastName").value, 
+          Email : document.getElementById("Email").value, 
+          Phone : document.getElementById("Phone").value, 
+        }
+        
+        await fetch("/{{team_member.id}}/", {method: 'POST', body: JSON.stringify(data)})
+        
+        location.href = '/'
+    };
+
+    
+    async function onDelete() {
+          
+        await fetch("/{{team_member.id}}/", {method: 'DELETE'})
+        
+        location.href = '/'
+    }
+    
+    window.onload = function(){ 
+ 
+      document.getElementById("saveButton").onclick = onSave
+      document.getElementById("deleteButton").onclick = onDelete
+   
+      {% if team_member == None %}
+        document.getElementById("deleteButton").hidden = 'hidden'
+        document.getElementById("saveButton").onclick = onAdd
+      {% endif %}
+    } 
+    
+</script>
+
+<link rel="stylesheet" href="{% static 'members/style.css' %}">
+
+
+<br>
+
+{% if team_member == None %}
+<b>Add a team member</b> 
+<br>
+
+<span class="subheading">Set email, location and role.</span>
+<br><br>
+{%else %}
+<b>Edit team member</b> 
+<br>
+
+<span class="subheading">Edit contact info, location and role.</span>
+<br><br>
+{% endif %}
+
+<hr>
+<span>Info</span>
+
+<br>
+    <input type="text" id="FirstName" name="FirstName" value="{{ team_member.FirstName  }}"><br>
+    <input type="text" id="LastName" name="LastName" value="{{ team_member.LastName  }}"><br>
+    <input type="text" id="Email" name="Email" value="{{ team_member.Email  }}"><br>
+    <input type="text" id="Phone" name="Phone" value="{{ team_member.Phone  }}"><br>
+
+<button id="deleteButton" >Delete</button>
+
+<button id="saveButton" >Save</button>
+
+
+
