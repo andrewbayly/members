@@ -5,11 +5,19 @@
 
     async function onAdd() {
         
-        const data = {
+        var data = {
           FirstName : document.getElementById("FirstName").value, 
           LastName : document.getElementById("LastName").value, 
           Email : document.getElementById("Email").value, 
           Phone : document.getElementById("Phone").value, 
+        }
+
+        //get radio button value: 
+        var ele = document.getElementsByTagName('input');
+        for (i = 0; i < ele.length; i++) {
+            if (ele[i].type == "radio" && ele[i].checked ) {
+                data.Admin = (ele[i].id == 'Admin') 
+            }
         }
         
         await fetch("/", {method: 'PUT', body: JSON.stringify(data)})
@@ -19,7 +27,7 @@
     
     async function onSave() {
         
-        const data = {
+        var data = {
     {% if team_member == None %}
           id : null, 
     {% else %}    
@@ -29,6 +37,14 @@
           LastName : document.getElementById("LastName").value, 
           Email : document.getElementById("Email").value, 
           Phone : document.getElementById("Phone").value, 
+        }
+        
+        //get radio button value: 
+        var ele = document.getElementsByTagName('input');
+        for (i = 0; i < ele.length; i++) {
+            if (ele[i].type == "radio" && ele[i].checked ) {
+                data.Admin = (ele[i].id == 'Admin') 
+            }
         }
         
         await fetch("/{{team_member.id}}/", {method: 'POST', body: JSON.stringify(data)})
@@ -84,6 +100,19 @@
     <input type="text" id="LastName" name="LastName" value="{{ team_member.LastName  }}"><br>
     <input type="text" id="Email" name="Email" value="{{ team_member.Email  }}"><br>
     <input type="text" id="Phone" name="Phone" value="{{ team_member.Phone  }}"><br>
+
+    <input class="radio" type="radio" id="Regular" name="Admin" 
+    {% if team_member.Admin == False or team_member == None %}
+    checked="checked"
+    {% endif %}
+    >
+    <label for="age1">Regular - Can't delete members</label><br>
+    <input class="radio" type="radio" id="Admin" name="Admin"
+    {% if team_member.Admin == True %}
+    checked="checked"
+    {% endif %}
+    >
+    <label for="age2">Admin - Can delete members</label><br> 
 
 <button id="deleteButton" >Delete</button>
 

@@ -28,7 +28,7 @@ def index(request):
         t.LastName = body['LastName'] 
         t.Phone = body['Phone'] 
         t.Email = body['Email']
-        t.Admin = False #TODO! 
+        t.Admin = body['Admin']
         t.save()
                 
         return HttpResponse()
@@ -61,6 +61,7 @@ def edit(request, id):
         t.LastName = body['LastName'] 
         t.Phone = body['Phone'] 
         t.Email = body['Email'] 
+        t.Admin = body['Admin']
         t.save()
                 
         return HttpResponse()

@@ -37,3 +37,8 @@ span.subheading {
     font-weight: bold;
     color: #BBBBBB;
 }
+
+input.radio {
+    direction:rtl;
+    text-align:right !important;
+}
