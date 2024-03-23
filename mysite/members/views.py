@@ -7,8 +7,7 @@ import json
 
 @csrf_exempt
 def index(request):
-    print(request.method)
-
+    
     if request.method == 'GET' :
 
         team_member_list = TeamMember.objects.order_by('id')
@@ -37,8 +36,6 @@ def index(request):
 
 def add(request):
 
-    print("Add...") 
-
     template = loader.get_template('members/edit.html')
   
     context = {
@@ -50,7 +47,6 @@ def add(request):
 
 @csrf_exempt
 def edit(request, id):
-    print(request.method)
     
     if request.method == 'POST' :
         body = json.loads(request.body)
@@ -84,3 +80,5 @@ def edit(request, id):
         team_member.delete()
     
         return HttpResponse()
+        
+        
