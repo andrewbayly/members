@@ -2,14 +2,14 @@
 
 <link rel="stylesheet" href="{% static 'members/style.css' %}">
 
-<button id="addButton" >Add</button>
+<button id="addButton" class="addbutton" ><img src="{% static 'members/plus.png' %}" /></button>
 
-<br>
+<br><br>
 
-<b>Team members</b> <br>
+<span class="heading">Team members</span> <br>
 
 <span class="subheading">You have {{ team_member_list|length }} team members.</span>
-<br><br>
+<br><br><br>
 
 <hr><br>
 <ul>
@@ -20,7 +20,7 @@
             <table>
               <tr>
                 <td>
-                <img src="{% static 'members/head.png' %}" alt="My image">
+                <img src="{% static 'members/head.png' %}" width="70">
                 </td>
                 <td>
                 <div>

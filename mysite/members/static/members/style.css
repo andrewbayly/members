@@ -1,5 +1,11 @@
 body { 
   font-family : arial;
+  width: 360px; 
+  margin: 20;
+}
+
+hr { 
+  border-top: 1px solid #DDDDDD;   
 }
 
 li a {
@@ -19,22 +25,30 @@ ul {
 }
 
 span.bodytext { 
-    font-size: 12px;
-    line-height: 14pt;
+    font-size: 14px;
+    line-height: 16pt;
     color: #BBBBBB;
 }
 
 span.titletext { 
-    font-size: 12px;
-    font-weight: bold;
-    line-height: 14pt;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 16pt;
     color: grey;
     
 }
 
+span.heading { 
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 30pt;
+    color: black;
+}
+
 span.subheading { 
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 18px;
+    line-height: 20pt;
+    font-weight: normal;
     color: #BBBBBB;
 }
 
@@ -42,3 +56,50 @@ input.radio {
     direction:rtl;
     text-align:right !important;
 }
+
+.button {
+  border-radius: 4px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.savebutton {
+  border: none;
+  background-color: #4070FF;
+  color: white;
+  float: right;
+}
+
+.deletebutton {
+  border: 2px solid #CCCCCC;
+  background-color: #FFFFFF;
+  color: #C00000; 
+}
+
+.addbutton {
+  border: none;
+  background-color: #FFFFFF;
+  color: #C00000; 
+  cursor: pointer;
+  float: right;
+}
+
+
+input.text {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+
+
+

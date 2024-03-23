@@ -63,10 +63,12 @@
     window.onload = function(){ 
  
       document.getElementById("saveButton").onclick = onSave
-      document.getElementById("deleteButton").onclick = onDelete
-   
+      {% if team_member != None %}
+        document.getElementById("deleteButton").onclick = onDelete
+      {% endif %}
+      
       {% if team_member == None %}
-        document.getElementById("deleteButton").hidden = 'hidden'
+       // document.getElementById("deleteButton").hidden = "hidden"
         document.getElementById("saveButton").onclick = onAdd
       {% endif %}
     } 
@@ -79,13 +81,13 @@
 <br>
 
 {% if team_member == None %}
-<b>Add a team member</b> 
+<span class="heading">Add a team member</span> 
 <br>
 
 <span class="subheading">Set email, location and role.</span>
 <br><br>
 {%else %}
-<b>Edit team member</b> 
+<span class="heading">Edit team member</span> 
 <br>
 
 <span class="subheading">Edit contact info, location and role.</span>
@@ -93,20 +95,23 @@
 {% endif %}
 
 <hr>
+<br>
 <span>Info</span>
 
-<br>
-    <input type="text" id="FirstName" name="FirstName" value="{{ team_member.FirstName  }}"><br>
-    <input type="text" id="LastName" name="LastName" value="{{ team_member.LastName  }}"><br>
-    <input type="text" id="Email" name="Email" value="{{ team_member.Email  }}"><br>
-    <input type="text" id="Phone" name="Phone" value="{{ team_member.Phone  }}"><br>
 
+<br>
+    <input class="text" type="text" id="FirstName" name="FirstName" value="{{ team_member.FirstName  }}"><br>
+    <input class="text" type="text" id="LastName" name="LastName" value="{{ team_member.LastName  }}"><br>
+    <input class="text" type="text" id="Email" name="Email" value="{{ team_member.Email  }}"><br>
+    <input class="text" type="text" id="Phone" name="Phone" value="{{ team_member.Phone  }}"><br>
+    <br>Role<br><br>
     <input class="radio" type="radio" id="Regular" name="Admin" 
     {% if team_member.Admin == False or team_member == None %}
     checked="checked"
     {% endif %}
     >
     <label for="age1">Regular - Can't delete members</label><br>
+    <br>
     <input class="radio" type="radio" id="Admin" name="Admin"
     {% if team_member.Admin == True %}
     checked="checked"
@@ -114,9 +119,13 @@
     >
     <label for="age2">Admin - Can delete members</label><br> 
 
-<button id="deleteButton" >Delete</button>
+<br>
+{% if team_member != None %}
+<button class="button deletebutton" id="deleteButton" >Delete</button>
+{% endif%}
 
-<button id="saveButton" >Save</button>
+<button class="button savebutton" id="saveButton" >Save</button>
+
 
 
 
