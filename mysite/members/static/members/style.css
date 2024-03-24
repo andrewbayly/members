@@ -90,7 +90,7 @@ input.radio {
 }
 
 
-input.text {
+input.form-control {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -100,6 +100,14 @@ input.text {
   box-sizing: border-box;
 }
 
+span.radio { 
+  float: right; 
+}
 
+span.field-heading { 
+  font-size: 20px;
+  line-height: 20pt;
+  font-weight: normal;
+}
 
 

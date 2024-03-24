@@ -2,14 +2,19 @@ from django.http import HttpResponse
 from django.template import loader
 from .models import TeamMember
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_protect
+
+from .forms import MemberForm
+
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 
 import json
 
-@csrf_exempt
 def index(request):
     
     if request.method == 'GET' :
-
+    
         team_member_list = TeamMember.objects.order_by('id')
 
         template = loader.get_template('members/index.html') 
@@ -17,68 +22,79 @@ def index(request):
         context = {
             'team_member_list': team_member_list,
         }
+
+        return HttpResponse(template.render(context, request))
         
-    elif request.method == 'PUT' :    
-        body = json.loads(request.body)
+
+def save(request):
     
-        t = TeamMember()
-                
-        t.FirstName = body['FirstName'] 
-        t.LastName = body['LastName'] 
-        t.Phone = body['Phone'] 
-        t.Email = body['Email']
-        t.Admin = body['Admin']
-        t.save()
-                
-        return HttpResponse()
+    # if this is a POST request we need to process the form data
+    if request.method == "POST":
+    
+        # Note: we can get here from Add or Edit screen when we hit Save button.
+    
+        # create a form instance and populate it with data from the request:
+        form = MemberForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            the_id = form.cleaned_data["Id"]
+            
+            t = TeamMember()
+            
+            if the_id != -1 : 
+                t = TeamMember.objects.filter(id=form.cleaned_data["Id"])[0]
 
-    return HttpResponse(template.render(context, request))
+            t.FirstName = form.cleaned_data["FirstName"]
+            t.LastName = form.cleaned_data["LastName"]
+            t.Phone = form.cleaned_data["Phone"]
+            t.Email = form.cleaned_data["Email"]
+            t.Admin = form.cleaned_data["Admin"]
+    
+            t.save()
+            
+            # redirect to a new URL:
+            return HttpResponseRedirect("/")
 
-def add(request):
-
-    template = loader.get_template('members/edit.html')
-  
-    context = {
-        'team_member' : None
-    } 
-
-    return HttpResponse(template.render(context, request))
-
-
-@csrf_exempt
+    elif request.method == "GET":
+    
+        form = MemberForm(initial={
+            'Id': -1, 
+            'Admin':False 
+        })
+        
+        return render(request, "members/edit.html", {"form": form})
+        
+        
 def edit(request, id):
-    
-    if request.method == 'POST' :
-        body = json.loads(request.body)
-    
-        t = TeamMember.objects.filter(id=int(body['id']))[0]
-                
-        t.FirstName = body['FirstName'] 
-        t.LastName = body['LastName'] 
-        t.Phone = body['Phone'] 
-        t.Email = body['Email'] 
-        t.Admin = body['Admin']
-        t.save()
-                
-        return HttpResponse()
-        
-    elif request.method == 'GET' :
+
+    if request.method == 'GET' :
 
         team_member = TeamMember.objects.get(id=id)
-    
-        template = loader.get_template('members/edit.html')
     
         context = {
             'team_member' : team_member
         } 
 
-        return HttpResponse(template.render(context, request))
+        form = MemberForm(initial={
+            'Id': id, 
+            'FirstName': team_member.FirstName, 
+            'LastName': team_member.LastName, 
+            'Email': team_member.Email, 
+            'Phone': team_member.Phone, 
+            'Admin': team_member.Admin
+        })
 
-    elif request.method == 'DELETE' :
+        return render(request, "members/edit.html", {"form": form, 'team_member' : team_member})
 
-        team_member = TeamMember.objects.get(id=id)
-        team_member.delete()
+
+@csrf_exempt
+def delete(request, id):
     
-        return HttpResponse()
+    team_member = TeamMember.objects.get(id=id)
+    team_member.delete()
+    
+    return HttpResponse()
+
         
         

@@ -24,7 +24,7 @@
                 </td>
                 <td>
                 <div>
-                <span class="titletext"><a href="/{{ team_member.id }}/">{{ team_member.FirstName  }} {{  team_member.LastName }} {{ team_member.getAdmin }}</a></span><br>
+                <span class="titletext"><a href="/member/{{ team_member.id }}/">{{ team_member.FirstName  }} {{  team_member.LastName }} {{ team_member.getAdmin }}</a></span><br>
                 <span class="bodytext">{{ team_member.Phone  }}</span><br>
                 <span class="bodytext">{{ team_member.Email  }}</span><br>
                 </div>
@@ -41,7 +41,7 @@
 
     function onAdd() {
 
-        location.href = '/add'
+        location.href = '/member/'
 
     };
     

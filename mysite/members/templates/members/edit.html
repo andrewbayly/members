@@ -1,82 +1,24 @@
 {% load static %}
 
-
 <script>
-
-    async function onAdd() {
-        
-        var data = {
-          FirstName : document.getElementById("FirstName").value, 
-          LastName : document.getElementById("LastName").value, 
-          Email : document.getElementById("Email").value, 
-          Phone : document.getElementById("Phone").value, 
-        }
-
-        //get radio button value: 
-        var ele = document.getElementsByTagName('input');
-        for (i = 0; i < ele.length; i++) {
-            if (ele[i].type == "radio" && ele[i].checked ) {
-                data.Admin = (ele[i].id == 'Admin') 
-            }
-        }
-        
-        await fetch("/", {method: 'PUT', body: JSON.stringify(data)})
-        
-        location.href = '/'
-    };
-    
-    async function onSave() {
-        
-        var data = {
-    {% if team_member == None %}
-          id : null, 
-    {% else %}    
-          id : {{team_member.id}},  
-    {% endif %}    
-          FirstName : document.getElementById("FirstName").value, 
-          LastName : document.getElementById("LastName").value, 
-          Email : document.getElementById("Email").value, 
-          Phone : document.getElementById("Phone").value, 
-        }
-        
-        //get radio button value: 
-        var ele = document.getElementsByTagName('input');
-        for (i = 0; i < ele.length; i++) {
-            if (ele[i].type == "radio" && ele[i].checked ) {
-                data.Admin = (ele[i].id == 'Admin') 
-            }
-        }
-        
-        await fetch("/{{team_member.id}}/", {method: 'POST', body: JSON.stringify(data)})
-        
-        location.href = '/'
-    };
-
-    
     async function onDelete() {
           
-        await fetch("/{{team_member.id}}/", {method: 'DELETE'})
+        await fetch("/member/{{team_member.id}}/delete/", {method: 'POST'})
         
         location.href = '/'
     }
     
     window.onload = function(){ 
  
-      document.getElementById("saveButton").onclick = onSave
       {% if team_member != None %}
         document.getElementById("deleteButton").onclick = onDelete
       {% endif %}
       
-      {% if team_member == None %}
-       // document.getElementById("deleteButton").hidden = "hidden"
-        document.getElementById("saveButton").onclick = onAdd
-      {% endif %}
     } 
     
 </script>
 
 <link rel="stylesheet" href="{% static 'members/style.css' %}">
-
 
 <br>
 
@@ -95,37 +37,32 @@
 {% endif %}
 
 <hr>
-<br>
-<span>Info</span>
-
 
 <br>
-    <input class="text" type="text" id="FirstName" name="FirstName" value="{{ team_member.FirstName  }}"><br>
-    <input class="text" type="text" id="LastName" name="LastName" value="{{ team_member.LastName  }}"><br>
-    <input class="text" type="text" id="Email" name="Email" value="{{ team_member.Email  }}"><br>
-    <input class="text" type="text" id="Phone" name="Phone" value="{{ team_member.Phone  }}"><br>
-    <br>Role<br><br>
-    <input class="radio" type="radio" id="Regular" name="Admin" 
-    {% if team_member.Admin == False or team_member == None %}
-    checked="checked"
-    {% endif %}
-    >
-    <label for="age1">Regular - Can't delete members</label><br>
+<form action="/member/" method="post">
+    {% csrf_token %}
+    
+    <span class="field-heading">Info</span>
+    
+    {{ form.Id }}
+    {{ form.FirstName }}
+    {{ form.LastName }}
+    {{ form.Email }}
+    {{ form.Phone }}
+    
+    <br><br><span class="field-heading">Role</span><br><br>
+    
+    {% for radio in form.Admin %}
+        {{ radio.choice_label }}
+        <span class="radio">{{ radio.tag }}</span>
+        <hr>
+        
+    {% endfor %}
+    
     <br>
-    <input class="radio" type="radio" id="Admin" name="Admin"
-    {% if team_member.Admin == True %}
-    checked="checked"
-    {% endif %}
-    >
-    <label for="age2">Admin - Can delete members</label><br> 
-
-<br>
-{% if team_member != None %}
-<button class="button deletebutton" id="deleteButton" >Delete</button>
-{% endif%}
-
-<button class="button savebutton" id="saveButton" >Save</button>
-
-
-
+    <input type="submit" class="button savebutton" value="Save">
+    {% if team_member != None %}
+    <button type="button" class="button deletebutton" id="deleteButton" >Delete</button>
+    {% endif%}
+</form>
 
