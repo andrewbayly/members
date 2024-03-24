@@ -1,6 +1,9 @@
 # members
 InstaWork Team Members coding challenge
 
+## Duration
+24 hours
+
 ## Dependencies
 1. Python, at least version: 3.6.3
 2. Django, at least version: 3.2.25
@@ -18,7 +21,8 @@ To deploy and run the project on your Mac, follow these steps:
 8. goto: http://localhost:8000/
 
 ## Open Issues
-1. On the Edit and Add screens, there are radio buttons for the Role of the Team Member. According to the wire-frame, the buttons should be on the right, and the text on the left. I researched how to achieve this with a radio-button and could not find a straight-forward answer. I did find discussions where it is asserted that the buttons look better on the left, and that's why standard radio buttons are designed that way. So, in the real-world, I would want to hash this out with UX Team, to understand better what is intended, and if it would be worth the effort to make a custom control.
+1. I have attempted to deal with CSRF properly. However I could not get it to
+work for the delete view. Instead, I added @csrf_exempt on this view.
 
 ## Test Steps
 I decided to test the front-end manually. Here are a list of scenarios and test steps/expectations that I used.
@@ -64,15 +68,41 @@ Steps
 * Click Delete
 * Verify that Jo3 Flint was removed from the list.
 
-
-
 ## Screen-shots
 
-![image](https://github.com/andrewbayly/members/assets/99320/47c76184-323d-4694-b6c8-8c4165c7c314)
+![image](https://github.com/andrewbayly/members/assets/99320/94cf1ea9-c67f-44c0-b00e-834f2834b1a7)
 
-![image](https://github.com/andrewbayly/members/assets/99320/fde398a9-819a-4a59-8a61-4a296a6b775b)
+![image](https://github.com/andrewbayly/members/assets/99320/517b6c93-12eb-4512-8c59-05eb8abccff0)
 
-![image](https://github.com/andrewbayly/members/assets/99320/2e535139-dcab-4466-ab52-b116ffca4aac)
+![image](https://github.com/andrewbayly/members/assets/99320/725db74d-0e3d-4b4d-9f3d-2f805dc796f2)
+
+
+## Approach
+I took an iterative approach. First iteration, I just wanted to get something working, and to do this, I used HTML elements, but no HTML form. I also did not use the Django Form class. Second iteration, I used Django form class, created
+a MemberForm subclass, and utilized this to create an HTML form. In my first iteration, I spent some time trying to get the radio button to work, and curiosly, this problem was easily solved when I switched to using Django form.
+
+## Overview (of the code)
+This may be helpful - a breakdown of the main code in the repo, and what does what: 
+
+| File        | Description |
+| ----------- | ----------- |
+| mysite/members/views.py  | Views       |
+| mysite/members/urls.py  |  URL patterns      |
+| mysite/members/models.py | Models        |
+| mysite/members/forms.py      |  Forms      |
+| mysite/members/templates/members/edit.html | Edit Template       |
+| mysite/members/templates/members/index.html | Main Screen Template       |
+| mysite/members/static/members/style.css   | Styles (CSS)       |
+
+
+
+
+
+
+
+
+
+
 
 
 
