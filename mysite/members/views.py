@@ -11,6 +11,14 @@ from django.shortcuts import render
 
 import json
 
+#
+# Note: this function returns the id of the current Team Member
+# in other words the user who is logged into the system.
+# In this demo, we hard-code the id to 1.
+#
+def getCurrentTeamMemberId(): 
+    return 1
+
 def index(request):
     
     if request.method == 'GET' :
@@ -21,6 +29,7 @@ def index(request):
 
         context = {
             'team_member_list': team_member_list,
+            'current_team_member_id' : getCurrentTeamMemberId()
         }
 
         return HttpResponse(template.render(context, request))

@@ -24,7 +24,11 @@
                 </td>
                 <td>
                 <div>
-                <span class="titletext"><a href="/member/{{ team_member.id }}/">{{ team_member.FirstName  }} {{  team_member.LastName }} {{ team_member.getAdmin }}</a></span><br>
+                  {%if team_member.id == current_team_member_id %}
+                    <span class="titletext"><a>{{ team_member.FirstName  }} {{  team_member.LastName }} {{ team_member.getAdmin }}</a></span><br>
+                  {% else %}
+                    <span class="titletext"><a href="/member/{{ team_member.id }}/">{{ team_member.FirstName  }} {{  team_member.LastName }} {{ team_member.getAdmin }}</a></span><br>
+                  {%endif %}
                 <span class="bodytext">{{ team_member.Phone  }}</span><br>
                 <span class="bodytext">{{ team_member.Email  }}</span><br>
                 </div>
@@ -37,6 +41,8 @@
     {% endfor %}
 </ul>
 
+
+
 <script type="text/javascript">
 
     function onAdd() {
@@ -46,5 +52,14 @@
     };
     
     document.getElementById("addButton").onclick = onAdd
+    
+/**
+                {%if team_member.id == 1 %}
+                  <span class="titletext"><a>{{ team_member.FirstName  }} {{  team_member.LastName }} {{ team_member.getAdmin }}</a></span><br>
+                {% else %}
+                  <span class="titletext"><a href="/member/{{ team_member.id }}/">{{ team_member.FirstName  }} {{  team_member.LastName }} {{ team_member.getAdmin }}</a></span><br>
+                {%endif %}
+
+**/    
 
 </script>
