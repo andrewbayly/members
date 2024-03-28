@@ -17,7 +17,7 @@ To deploy and run the project on your Mac, follow these steps:
 4. clone the code-base
 5. cd into: /members/mysite
 6. run: python manage.py migrate
-7. run: python manage.py runserver
+7. run: python manage.py runserver --insecure
 8. goto: http://localhost:8000/
 
 ## Open Issues
