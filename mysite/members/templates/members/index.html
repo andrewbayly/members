@@ -2,6 +2,7 @@
 
 <link rel="stylesheet" href="{% static 'members/style.css' %}">
 
+
 <button id="addButton" class="addbutton" ><img src="{% static 'members/plus.png' %}" /></button>
 
 <br><br>
@@ -25,9 +26,13 @@
                 <td>
                 <div>
                   {%if team_member.id == current_team_member_id %}
-                    <span class="titletext"><a>{{ team_member.FirstName  }} {{  team_member.LastName }} {{ team_member.getAdmin }}</a></span><br>
+                    <div class="tooltip"><span class="titletext"><a>{{ team_member.FirstName  }} {{  team_member.LastName }} {{ team_member.getAdmin }}</a></span>
+                    <span class="tooltiptext tooltip-style-1">You cannot edit yourself</span>
+                    </div><br>
                   {% else %}
-                    <span class="titletext"><a href="/member/{{ team_member.id }}/">{{ team_member.FirstName  }} {{  team_member.LastName }} {{ team_member.getAdmin }}</a></span><br>
+                    <div class="tooltip"><span class="titletext"><a href="/member/{{ team_member.id }}/">{{ team_member.FirstName  }} {{  team_member.LastName }} {{ team_member.getAdmin }}</a></span>
+                    <span class="tooltiptext tooltip-style-2">Edit</span>
+                    </div><br>
                   {%endif %}
                 <span class="bodytext">{{ team_member.Phone  }}</span><br>
                 <span class="bodytext">{{ team_member.Email  }}</span><br>
@@ -40,8 +45,6 @@
         </li>
     {% endfor %}
 </ul>
-
-
 
 <script type="text/javascript">
 
