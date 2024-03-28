@@ -13,7 +13,7 @@ class MemberForm(forms.Form):
     Email = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Email'})) 
     Email.widget.attrs.update({"class": "form-control"})   
   
-    Phone = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Phone'}))
+    Phone = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Phone (000-000-0000)'}))
     Phone.widget.attrs.update({"class": "form-control"})   
     
     CHOICES = [

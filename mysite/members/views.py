@@ -10,6 +10,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.db import IntegrityError
 
+from email_validator import validate_email, EmailNotValidError
+
+import re
 import json
 
 #
@@ -50,6 +53,7 @@ def save(request):
             # process the data in form.cleaned_data as required
             the_id = form.cleaned_data["Id"]
             
+            
             t = TeamMember()
             
             if the_id != -1 : 
@@ -60,22 +64,33 @@ def save(request):
             t.Phone = form.cleaned_data["Phone"]
             t.Email = form.cleaned_data["Email"]
             t.Admin = form.cleaned_data["Admin"]
-    
-            try:
-                t.save()
-                # redirect to a new URL:
-                return HttpResponseRedirect("/")
+
+            # perform additional validation before saving
+            if not re.search("^\d{3}-\d{3}-\d{4}$", form.cleaned_data["Phone"]) :
+                form.add_error("Phone", "Phone number format required: 000-000-0000")
+            else:
+      
+                try: 
+                    validate_email(form.cleaned_data["Email"])
+                
+                    try:
+                        t.save()
+                        # redirect to a new URL:
+                        return HttpResponseRedirect("/")
         
-            except IntegrityError as error:
-                if str(error) == "UNIQUE constraint failed: members_teammember.Email" :
-                    form.add_error("Email", "Another Team Member has the same Email Address" ) 
-                if str(error) == "UNIQUE constraint failed: members_teammember.Phone" :
-                    form.add_error("Phone", "Another Team Member has the same Phone Number" ) 
-                    
-                if the_id != -1 :
-                    return render(request, "members/edit.html", {"form": form, 'team_member' : t})      
-                else: 
-                    return render(request, "members/edit.html", {"form": form})      
+                    except IntegrityError as error:
+                        if str(error) == "UNIQUE constraint failed: members_teammember.Email" :
+                            form.add_error("Email", "Another Team Member has the same Email Address" ) 
+                        if str(error) == "UNIQUE constraint failed: members_teammember.Phone" :
+                            form.add_error("Phone", "Another Team Member has the same Phone Number" ) 
+
+                except EmailNotValidError as e:
+                     form.add_error("Email", str(e))
+                                    
+            if the_id != -1 :
+                return render(request, "members/edit.html", {"form": form, 'team_member' : t})      
+            else: 
+                return render(request, "members/edit.html", {"form": form})      
                      
 
     elif request.method == "GET":
