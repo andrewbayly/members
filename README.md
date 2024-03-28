@@ -4,6 +4,16 @@ InstaWork Team Members coding challenge
 ## Duration
 24 hours
 
+## Updates
+
+| Issue | Resolution | 
+|-------|------------|
+| Navigation: not mapped urls give me an a hard 404 server error, e.g.: http://127.0.0.1:8000/bogus. | FIXED by setting DEBUG flag in settings to False, and adding custom 404 error page. Also add the --insecure option when using runserver. |
+| System integrity: I was able to delete all users. Let's assume that only admins would be able to add users, how we could setup the app to prevent a dead-end situation? | Approach: Stop user from editing himself. Note that I have successfully used exactly this approach at Domino Data Lab, where we had this exact problem. Method: Add a method in the back-end that gets the "current" user. The idea here is that if we added authentication, then this method would communicate with the Authentication module to bring back the current user id. In the demo, this is hard-coded to 1. The form checks the current_user field, and disables the link for the current user. I also added a tool-tip so you can see the difference. Possible Improvement: The above guards the user from editing himself in the front-end only. A malicious user could still disable the system by typing in the edit URL, and changing the role to Regular, so protecting the back-end would be a natural next step. |
+
+
+
+
 ## Dependencies
 1. Python, at least version: 3.6.3
 2. Django, at least version: 3.2.25
@@ -17,7 +27,7 @@ To deploy and run the project on your Mac, follow these steps:
 4. clone the code-base
 5. cd into: /members/mysite
 6. run: python manage.py migrate
-7. run: python manage.py runserver
+7. run: python manage.py runserver --insecure
 8. goto: http://localhost:8000/
 
 ## Open Issues
