@@ -11,7 +11,7 @@ InstaWork Team Members coding challenge
 | Navigation: not mapped urls give me an a hard 404 server error, e.g.: http://127.0.0.1:8000/bogus. | FIXED by setting DEBUG flag in settings to False, and adding custom 404 error page. Also add the --insecure option when using runserver. |
 | System integrity: I was able to delete all users. Let's assume that only admins would be able to add users, how we could setup the app to prevent a dead-end situation? | Approach: Stop user from editing himself. Note that I have successfully used exactly this approach at Domino Data Lab, where we had this exact problem. Method: Add a method in the back-end that gets the "current" user. The idea here is that if we added authentication, then this method would communicate with the Authentication module to bring back the current user id. In the demo, this is hard-coded to 1. The form checks the current_user field, and disables the link for the current user. I also added a tool-tip so you can see the difference. Possible Improvement: The above guards the user from editing himself in the front-end only. A malicious user could still disable the system by typing in the edit URL, and changing the role to Regular, so protecting the back-end would be a natural next step. |
 | System integrity: I was able to create members with the same email / phone number, ending up with duplicate records | Added validation for Email and Phone fields, first on database, then in the back-end, transforming the db error messages into friendly ones, and then on the front-end in the template.|
-
+| Input Validation: I was able to enter bogus for both email and phone number. | Add placeholders for Input fields. Add server-side validation for email address and phone number. Note: I used a new module - email_validator which needs to be installed - see Deployment instructions. | 
 
 
 ## Dependencies
@@ -23,12 +23,13 @@ To deploy and run the project on your Mac, follow these steps:
 
 1. Install python
 2. Create and activate a venv
-3. Install django
-4. clone the code-base
-5. cd into: /members/mysite
-6. run: python manage.py migrate
-7. run: python manage.py runserver --insecure
-8. goto: http://localhost:8000/
+3. pip install email_validator
+4. Install django
+5. clone the code-base
+6. cd into: /members/mysite
+7. run: python manage.py migrate
+8. run: python manage.py runserver --insecure
+9. goto: http://localhost:8000/
 
 ## Open Issues
 1. I have attempted to deal with CSRF properly. However I could not get it to
