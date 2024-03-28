@@ -20,6 +20,12 @@
 
 <link rel="stylesheet" href="{% static 'members/style.css' %}">
 
+{% if form.errors %}
+    <div>
+        {{ form.errors }}
+    </div>
+{% endif %}
+
 <br>
 
 {% if team_member == None %}

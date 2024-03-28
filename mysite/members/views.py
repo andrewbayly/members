@@ -8,6 +8,7 @@ from .forms import MemberForm
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.db import IntegrityError
 
 import json
 
@@ -60,10 +61,22 @@ def save(request):
             t.Email = form.cleaned_data["Email"]
             t.Admin = form.cleaned_data["Admin"]
     
-            t.save()
-            
-            # redirect to a new URL:
-            return HttpResponseRedirect("/")
+            try:
+                t.save()
+                # redirect to a new URL:
+                return HttpResponseRedirect("/")
+        
+            except IntegrityError as error:
+                if str(error) == "UNIQUE constraint failed: members_teammember.Email" :
+                    form.add_error("Email", "Another Team Member has the same Email Address" ) 
+                if str(error) == "UNIQUE constraint failed: members_teammember.Phone" :
+                    form.add_error("Phone", "Another Team Member has the same Phone Number" ) 
+                    
+                if the_id != -1 :
+                    return render(request, "members/edit.html", {"form": form, 'team_member' : t})      
+                else: 
+                    return render(request, "members/edit.html", {"form": form})      
+                     
 
     elif request.method == "GET":
     
