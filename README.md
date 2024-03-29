@@ -38,10 +38,24 @@ To deploy and run the project on your Mac, follow these steps:
 10. run: python3.12 manage.py runserver --insecure
 11. goto: http://localhost:8000/
 
-### Test
+### Automated Test with Pylenium
 
-1. cd into /members/mysite
-2. run: python3.12 -m pytest tests
+#### Pre-reqs
+
+To make the tests work, there needs to be a single team member in the database ( with id=1 )
+This member cannot be edited.
+
+Enter the following record before running the tests: 
+
+  Andrew Bayly (admin)
+  415-640-2710
+  andrew.bayly@mac.com
+
+#### Steps
+
+1. run the server in a separate terminal window: python3.12 manage.py runserver --insecure 
+2. cd into /members/mysite
+3. run: python3.12 -m pytest tests
 
 ## Open Issues
 1. I have attempted to deal with CSRF properly. However I could not get it to
