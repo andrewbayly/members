@@ -13,6 +13,10 @@ InstaWork Team Members coding challenge
 | System integrity: I was able to create members with the same email / phone number, ending up with duplicate records | Added validation for Email and Phone fields, first on database, then in the back-end, transforming the db error messages into friendly ones, and then on the front-end in the template.|
 | Input Validation: I was able to enter bogus for both email and phone number. | Add placeholders for Input fields. Add server-side validation for email address and phone number. Note: I used a new module - email_validator which needs to be installed - see Deployment instructions. | 
 | Accessibility: Could we apply some best practices for accessibility, e.g. title for actionable elements. | Added Title for Input Fields and Buttons |
+| Data model: The member model has field called Admin, which is a boolean field. This may be limiting consider that already support 2 roles, which could be expanded in the future. | Modify Model - Replace Admin(True/False) with Role(Integer, default=1, where 1=Regular, 2=Admin) |
+
+
+
 
 
 ## Dependencies
