@@ -14,14 +14,14 @@ InstaWork Team Members coding challenge
 | Input Validation: I was able to enter bogus for both email and phone number. | Add placeholders for Input fields. Add server-side validation for email address and phone number. Note: I used a new module - email_validator which needs to be installed - see Deployment instructions. | 
 | Accessibility: Could we apply some best practices for accessibility, e.g. title for actionable elements. | Added Title for Input Fields and Buttons |
 | Data model: The member model has field called Admin, which is a boolean field. This may be limiting consider that already support 2 roles, which could be expanded in the future. | Modify Model - Replace Admin(True/False) with Role(Integer, default=1, where 1=Regular, 2=Admin) |
-
+| Tests: As you outlined the testing has been done manually, it would great to validate some of the functionality via tests | Created a Pylenium Test Suite. Note that this requires not only Pylenium, but also upgrade to the python and django versions. Pylenium Tests can be found in members/mysite/tests | 
 
 
 
 
 ## Dependencies
-1. Python, at least version: 3.6.3
-2. Django, at least version: 3.2.25
+1. Python, at least version: 3.12.2
+2. Django, at least version: 5.0.3
 
 ## Deployment & Run
 To deploy and run the project on your Mac, follow these steps: 
@@ -29,19 +29,26 @@ To deploy and run the project on your Mac, follow these steps:
 1. Install python
 2. Create and activate a venv
 3. pip install email_validator
-4. Install django
-5. clone the code-base
-6. cd into: /members/mysite
-7. run: python manage.py migrate
-8. run: python manage.py runserver --insecure
-9. goto: http://localhost:8000/
+4. pip install pyleniumio
+5. pip install setuptools
+6. Install django
+7. clone the code-base
+8. cd into: /members/mysite
+9. run: python3.12 manage.py migrate
+10. run: python3.12 manage.py runserver --insecure
+11. goto: http://localhost:8000/
+
+### Test
+
+1. cd into /members/mysite
+2. run: python3.12 -m pytest tests
 
 ## Open Issues
 1. I have attempted to deal with CSRF properly. However I could not get it to
 work for the delete view. Instead, I added @csrf_exempt on this view.
 
-## Test Steps
-I decided to test the front-end manually. Here are a list of scenarios and test steps/expectations that I used.
+## (Manual) Test Steps
+I decided to test the front-end manually AND use Pylenium. Here are a list of scenarios and test steps/expectations that I used for manual testing.
 
 Test Scenarios
 
@@ -109,6 +116,8 @@ This may be helpful - a breakdown of the main code in the repo, and what does wh
 | mysite/members/templates/members/edit.html | Edit Template       |
 | mysite/members/templates/members/index.html | Main Screen Template       |
 | mysite/members/static/members/style.css   | Styles (CSS)       |
+| mysite/tests   | Automated Tests (Pylenium) |
+
 
 
 
