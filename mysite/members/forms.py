@@ -17,10 +17,10 @@ class MemberForm(forms.Form):
     Phone.widget.attrs.update({"class": "form-control", "title" : "Phone Number"})   
     
     CHOICES = [
-        (False, "Regular - Can't delete members"),
-        (True, "Admin - Can delete members"),
+        (1, "Regular - Can't delete members"),
+        (2, "Admin - Can delete members"),
     ]
-    Admin = forms.ChoiceField(
+    Role = forms.ChoiceField(
         widget=forms.RadioSelect,
         choices=CHOICES, 
     )

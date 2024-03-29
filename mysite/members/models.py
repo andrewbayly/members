@@ -5,8 +5,8 @@ class TeamMember(models.Model):
     LastName = models.CharField(max_length=50)
     Email = models.CharField(max_length=50, unique = True)
     Phone = models.CharField(max_length=50, unique = True)
-    Admin = models.BooleanField()
+    Role = models.IntegerField(default=1)
     def getAdmin(self):
-        return "(admin)" if self.Admin else ""
+        return "(admin)" if self.Role == 2 else ""
         
 

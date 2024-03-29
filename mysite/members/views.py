@@ -63,7 +63,7 @@ def save(request):
             t.LastName = form.cleaned_data["LastName"]
             t.Phone = form.cleaned_data["Phone"]
             t.Email = form.cleaned_data["Email"]
-            t.Admin = form.cleaned_data["Admin"]
+            t.Role = form.cleaned_data["Role"]
 
             # perform additional validation before saving
             if not re.search("^\d{3}-\d{3}-\d{4}$", form.cleaned_data["Phone"]) :
@@ -97,7 +97,7 @@ def save(request):
     
         form = MemberForm(initial={
             'Id': -1, 
-            'Admin':False 
+            'Role': 1 
         })
         
         return render(request, "members/edit.html", {"form": form})
@@ -119,7 +119,7 @@ def edit(request, id):
             'LastName': team_member.LastName, 
             'Email': team_member.Email, 
             'Phone': team_member.Phone, 
-            'Admin': team_member.Admin
+            'Role': team_member.Role
         })
 
         return render(request, "members/edit.html", {"form": form, 'team_member' : team_member})
