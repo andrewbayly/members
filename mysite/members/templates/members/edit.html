@@ -3,9 +3,12 @@
 <script>
     async function onDelete() {
           
-        await fetch("/member/{{team_member.id}}/delete/", {method: 'POST'})
-        
-        location.href = '/'
+        if(confirm("Are you sure you want to delete this Team Member?")) { 
+          
+            await fetch("/member/{{team_member.id}}/delete/", {method: 'POST'})
+          
+            location.href = '/'
+        }  
     }
     
     window.onload = function(){ 

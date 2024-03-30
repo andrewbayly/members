@@ -103,16 +103,5 @@ def test_add_duplicate_email(py):
     
     assert py.contains('Another Team Member has the same Email Address')
     
-    #clean-up: 
-    # go back and delete the created team member
-    
-    py.visit('http://localhost:8000')
-    
-    py.contains("A B").click()
-    
-    py.get("#deleteButton").click()
-    
-  
-  
   
   
