@@ -15,6 +15,7 @@ InstaWork Team Members coding challenge
 | Accessibility: Could we apply some best practices for accessibility, e.g. title for actionable elements. | Added Title for Input Fields and Buttons |
 | Data model: The member model has field called Admin, which is a boolean field. This may be limiting consider that already support 2 roles, which could be expanded in the future. | Modify Model - Replace Admin(True/False) with Role(Integer, default=1, where 1=Regular, 2=Admin) |
 | Tests: As you outlined the testing has been done manually, it would great to validate some of the functionality via tests | Created a Pylenium Test Suite. Note that this requires not only Pylenium, but also upgrade to the python and django versions. Pylenium Tests can be found in members/mysite/tests | 
+| UX: Significant non-reversible actions should be confirmed by users before executing. E.g. delete a user. | Add Confirm message when deleting a user | 
 
 
 
